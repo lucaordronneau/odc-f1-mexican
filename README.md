@@ -19,8 +19,8 @@ This project predicts stint numbers, tire compounds, lap numbers, and lap times 
 1. **Clone the repository:**
 
    ```bash
-   git clone <repository_url>
-   cd <repository_directory>
+   git clone https://github.com/lucaordronneau/odc-f1-mexican.git
+   cd odc-f1-mexican/
    ```
 
 2. **Install dependencies using Poetry:**
