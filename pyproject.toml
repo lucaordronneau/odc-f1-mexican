@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "f1_mexican"
+version = "0.1.0"
+description = ""
+authors = ["lucaordronneau <lucaordronneau@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+scikit-learn = "^1.5.2"
+xgboost = "^2.1.1"
+shap = "^0.46.0"
+matplotlib = "^3.9.2"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

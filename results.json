@@ -1,0 +1,38 @@
+{
+    "VER": [
+        {
+            "grid_position": 1,
+            "stint_number": 2,
+            "predicted_compounds": [
+                "MEDIUM",
+                "HARD"
+            ],
+            "predicted_lap_number": [
+                24.0,
+                47.0
+            ],
+            "predicted_lap_time": [
+                82.92504119873047,
+                81.77375030517578
+            ]
+        }
+    ],
+    "LEC": [
+        {
+            "grid_position": 2,
+            "stint_number": 2,
+            "predicted_compounds": [
+                "MEDIUM",
+                "HARD"
+            ],
+            "predicted_lap_number": [
+                25.0,
+                46.0
+            ],
+            "predicted_lap_time": [
+                83.66840362548828,
+                82.06167602539062
+            ]
+        }
+    ]
+}
