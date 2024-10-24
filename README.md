@@ -55,23 +55,56 @@ This project predicts stint numbers, tire compounds, lap numbers, and lap times 
 
 ### Running the Prediction Script
 
-You can run the prediction script by passing the drivers and their grid positions via command-line arguments. The event (Mexican Grand Prix) and year (2024) are hard-coded.
+You can run the prediction script by passing the drivers and their grid positions via command-line arguments. Additionally, you can provide stint numbers, compounds, and lap numbers for each driver. If no stint numbers or compounds are provided, the script will infer them using pre-trained models.
 
 ### Command to Run:
 
 ```bash
-python f1_mexican/launch.py --drivers_grid <DRIVER1> <GRID_POSITION1> <DRIVER2> <GRID_POSITION2> ...
+python f1_mexican/main.py --drivers_grid <DRIVER1> <GRID_POSITION1> <DRIVER2> <GRID_POSITION2> ...
 ```
 
-For example, to predict for Charles Leclerc (LEC) starting at grid position 1, Max Verstappen (VER) at grid position 4, and Carlos Sainz (SAI) at grid position 7, run:
+#### Optional Parameters:
 
-```bash
-python f1_mexican/launch.py --drivers_grid LEC 1 VER 4 SAI 7
-```
+- `--stint_numbers`: A list of stint numbers for each driver. Must match the number of drivers.
+- `--compounds`: A list of compounds for each stint for each driver. Must be repeated for each driver. Valid compounds: `MEDIUM`, `HARD`, `SOFT`, `INTERMEDIATE`, `WET`.
+- `--lap_numbers`: A list of lap numbers corresponding to each stint for each driver. Must be repeated for each driver.
+
+### Examples:
+
+1. **Basic Prediction with Grid Positions Only**:
+
+   Predict stint numbers, compounds, and lap numbers for Charles Leclerc (LEC) at grid position 1, Max Verstappen (VER) at grid position 4, and Carlos Sainz (SAI) at grid position 7:
+
+   ```bash
+   python f1_mexican/main.py --drivers_grid LEC 1 VER 4 SAI 7
+   ```
+
+2. **Prediction with Custom Stint Numbers to evaluate the model independently**:
+
+   Provide custom stint numbers (2 stints for LEC, 3 stints for VER, 2 stints for SAI):
+
+   ```bash
+   python f1_mexican/main.py --drivers_grid LEC 1 VER 4 SAI 7 --stint_numbers 2 3 2
+   ```
+
+3. **Prediction with custom stint numbers, compounds, and lap numbers to evaluate the model independently**:
+
+   Specify custom compounds and lap numbers for each driver:
+
+   ```bash
+   python f1_mexican/main.py --drivers_grid LEC 1 VER 4 SAI 7    --stint_numbers 2 3 2    --compounds MEDIUM HARD --compounds SOFT HARD SOFT --compounds MEDIUM HARD    --lap_numbers 25 50 --lap_numbers 30 60 70 --lap_numbers 20 40
+   ```
+
+   This sets:
+   - LEC with 2 stints (`MEDIUM`, `HARD`) and lap numbers 25 and 50.
+   - VER with 3 stints (`SOFT`, `HARD`, `SOFT`) and lap numbers 30, 60, 70.
+   - SAI with 2 stints (`MEDIUM`, `HARD`) and lap numbers 20 and 40.
 
 ### Output
 
-The predictions will be printed to the console, and the results will be saved to a JSON file named `resuslts.json` in the project directory.
+The predictions will be printed to the console, and the results will be saved to a JSON file named `results.json` in the project directory.
+
+Example output:
 
 ```json
 {
@@ -125,10 +158,12 @@ The predictions will be printed to the console, and the results will be saved to
   - `final_tire_compound_xgboost_model.pkl`
   - `final_lap_number_xgboost_model.pkl`
   - `final_lap_time_xgboost_model.pkl`
-- `launch.py`: Main script for running predictions.
+- `main.py`: Main script for running predictions.
 - `train.py`: Main script for training.
 
 ### Training
+
+You can train the models using the `train.py` script. Ensure you have the necessary training data in the `data/` folder.
 
 ```bash
 python f1_mexican/train.py
@@ -139,13 +174,19 @@ python f1_mexican/train.py
 ### Example 1: Predict for a Single Driver
 
 ```bash
-python f1_mexican/launch.py --drivers_grid LEC 1
+python f1_mexican/main.py --drivers_grid LEC 1
 ```
 
-### Example 2: Predict for Multiple Drivers
+### Example 2: Predict for Multiple Drivers with Custom Stints
 
 ```bash
-python f1_mexican/launch.py --drivers_grid LEC 1 VER 4 SAI 7
+python f1_mexican/main.py --drivers_grid LEC 1 VER 4 SAI 7 --stint_numbers 2 3 2
+```
+
+### Example 3: Predict for Multiple Drivers with Custom Compounds and Lap Numbers
+
+```bash
+python f1_mexican/main.py --drivers_grid LEC 1 VER 4 SAI 7 --stint_numbers 2 3 2 --compounds MEDIUM HARD --compounds SOFT HARD SOFT --compounds MEDIUM HARD --lap_numbers 25 50 --lap_numbers 30 60 70 --lap_numbers 20 40
 ```
 
 ## License
